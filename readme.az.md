@@ -19,6 +19,26 @@ compatible-level: track2
 
 ### -----start of auto generated cli-directive----- ###
 ``` yaml $(az)
+directive:
+
+  - where:
+      group: network express-route-circuit-connection
+    set:
+      group: network express-route-peering-connection
+  - where:
+      group: network express-route-peering-connection
+    set:
+      group: network express-route peering-connection
+  - where:
+      group: network express-route peering-connection
+    set:
+      group: network express-route peering connection
+
+  - where:
+      group: network express-route-circuit
+    set:
+      group: network express-route
+
 cli:
   cli-directive:
     - where:
