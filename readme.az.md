@@ -21,9 +21,25 @@ cli:
           hidden: false
 directive: 
   - where: 
-      command: vm ssh-public-key
+      group: vm ssh-public-key
     set:
-      command: sshkey
+      group: sshkey
+  - where:
+      group: vm virtual-machine-scale-set
+    set:
+      group: vmss
+  - where:
+      group: vm virtual-machine-scale-set-vm-extension
+    set:
+      group: vmss vm-extension
+  - where:
+      group: vm virtual-machine-scale-set-v-ms
+    set:
+      group: vmss v-ms
+  - where:
+      group: vm virtual-machine-scale-set-vm-run-command
+    set:
+      group: vmss vm-run
 ```
 
 ### -----start of auto generated cli-directive----- ###
