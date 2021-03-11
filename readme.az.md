@@ -25,7 +25,7 @@ directive:
     set:
       group: sshkey
   - where:
-      group: vm virtual-machine-scale-set
+      group: ^vm virtual-machine-scale-set$
     set:
       group: vmss
   - where:
@@ -40,6 +40,10 @@ directive:
       group: vm virtual-machine-scale-set-vm-run-command
     set:
       group: vmss vm-run
+  - where:
+      group: ^vm virtual-machine$
+    set:
+      group: vm
 ```
 
 ### -----start of auto generated cli-directive----- ###
