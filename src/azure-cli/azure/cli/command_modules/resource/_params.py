@@ -67,6 +67,9 @@ def load_arguments(self, _):
     deployment_what_if_type = CLIArgumentType(options_list=['--what-if', '-w'], action='store_true',
                                               help='Instruct the command to run deployment What-If.',
                                               min_api='2019-07-01')
+    deployment_what_if_proceed_always = CLIArgumentType(options_list=['--proceed-always'], action='store_true',
+                                                                   help='Instruct the command to execute the deployment and not prompt the user for an approval. Applicable when --confirm-with-what-if is set.',
+                                                                   min_api='2019-07-01')
     deployment_what_if_proceed_if_no_change_type = CLIArgumentType(options_list=['--proceed-if-no-change'], action='store_true',
                                                                    help='Instruct the command to execute the deployment if the What-If result contains no resource changes. Applicable when --confirm-with-what-if is set.',
                                                                    min_api='2019-07-01')
@@ -364,6 +367,7 @@ def load_arguments(self, _):
                    help="Space-separated list of resource change types to be excluded from What-If results. Applicable when --confirm-with-what-if is set.")
         c.argument('what_if', arg_type=deployment_what_if_type)
         c.argument('proceed_if_no_change', arg_type=deployment_what_if_proceed_if_no_change_type)
+        c.argument('proceed_always', arg_type=deployment_what_if_proceed_always)
 
     with self.argument_context('deployment validate') as c:
         c.argument('deployment_name', arg_type=deployment_create_name_type)
@@ -393,6 +397,7 @@ def load_arguments(self, _):
                    help="Space-separated list of resource change types to be excluded from What-If results. Applicable when --confirm-with-what-if is set.")
         c.argument('what_if', arg_type=deployment_what_if_type)
         c.argument('proceed_if_no_change', arg_type=deployment_what_if_proceed_if_no_change_type)
+        c.argument('proceed_always', arg_type=deployment_what_if_proceed_always)
 
     with self.argument_context('deployment sub what-if') as c:
         c.argument('deployment_name', arg_type=deployment_create_name_type)
@@ -434,6 +439,7 @@ def load_arguments(self, _):
                    help="Space-separated list of resource change types to be excluded from What-If results. Applicable when --confirm-with-what-if is set.")
         c.argument('what_if', arg_type=deployment_what_if_type)
         c.argument('proceed_if_no_change', arg_type=deployment_what_if_proceed_if_no_change_type)
+        c.argument('proceed_always', arg_type=deployment_what_if_proceed_always)
 
     with self.argument_context('deployment group what-if') as c:
         c.argument('deployment_name', arg_type=deployment_create_name_type)
@@ -472,6 +478,7 @@ def load_arguments(self, _):
                    min_api="2019-10-01")
         c.argument('what_if', arg_type=deployment_what_if_type)
         c.argument('proceed_if_no_change', arg_type=deployment_what_if_proceed_if_no_change_type)
+        c.argument('proceed_always', arg_type=deployment_what_if_proceed_always)
         c.argument('mode', arg_type=get_enum_type(DeploymentMode, default='incremental'), help='The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources.')
 
     with self.argument_context('deployment mg what-if') as c:
@@ -510,6 +517,7 @@ def load_arguments(self, _):
                    min_api="2019-10-01")
         c.argument('what_if', arg_type=deployment_what_if_type)
         c.argument('proceed_if_no_change', arg_type=deployment_what_if_proceed_if_no_change_type)
+        c.argument('proceed_always', arg_type=deployment_what_if_proceed_always)
 
     with self.argument_context('deployment tenant what-if') as c:
         c.argument('deployment_name', arg_type=deployment_create_name_type)

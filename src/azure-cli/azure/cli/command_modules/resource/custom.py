@@ -635,7 +635,7 @@ def deploy_arm_template_at_resource_group(cmd,
                                           aux_subscriptions=None, aux_tenants=None, no_prompt=False,
                                           confirm_with_what_if=None, what_if_result_format=None,
                                           what_if_exclude_change_types=None, template_spec=None, query_string=None,
-                                          what_if=None, proceed_if_no_change=None):
+                                          what_if=None, proceed_if_no_change=None, proceed_always=None):
     if confirm_with_what_if or what_if:
         what_if_result = _what_if_deploy_arm_template_at_resource_group_core(cmd,
                                                                              resource_group_name=resource_group_name,
@@ -648,14 +648,15 @@ def deploy_arm_template_at_resource_group(cmd,
         if what_if:
             return None
 
-        ChangeType = cmd.get_models('ChangeType')
-        has_change = any(change.change_type not in [ChangeType.no_change, ChangeType.ignore] for change in what_if_result.changes)
+        if not proceed_always:
+            ChangeType = cmd.get_models('ChangeType')
+            has_change = any(change.change_type not in [ChangeType.no_change, ChangeType.ignore] for change in what_if_result.changes)
 
-        if not proceed_if_no_change or has_change:
-            from knack.prompting import prompt_y_n
+            if not proceed_if_no_change or has_change:
+                from knack.prompting import prompt_y_n
 
-            if not prompt_y_n("\nAre you sure you want to execute the deployment?"):
-                return None
+                if not prompt_y_n("\nAre you sure you want to execute the deployment?"):
+                    return None
 
     return _deploy_arm_template_at_resource_group(cmd=cmd,
                                                   resource_group_name=resource_group_name,
